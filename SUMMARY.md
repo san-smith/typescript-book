@@ -1,7 +1,7 @@
 # Table of contents
 
-* [Introduction](README.md)
-* [Getting Started](getting-started/README.md)
+* [Введение](README.md)
+* [Начало работы](getting-started/README.md)
   * [Why TypeScript](getting-started/why-typescript.md)
 * [JavaScript](recap/README.md)
   * [Equality](recap/equality.md)
