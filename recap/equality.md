@@ -1,15 +1,15 @@
-# Equality
+# Равенство
 
-## Equality
+## Равенство
 
-One thing to be careful about in JavaScript is the difference between `==` and `===`. As JavaScript tries to be resilient against programming errors `==` tries to do type coercion between two variables e.g. converts a string to a number so that you can compare with a number as shown below:
+Одна из вещей, с которой нужно быть осторожным в JavaScript - это разница между `==` и `===`. Поскольку JavaScript пытается быть устойчивым к ошибкам программирования, оператор `==`пытается выполнить приведение типов между переменными, например, сконвертировать строку в число, чтобы вы могли сравнить его с числом, как в примере ниже:
 
 ```javascript
-console.log(5 == "5"); // true   , TS Error
-console.log(5 === "5"); // false , TS Error
+console.log(5 == "5"); // true   , TS Ошибка
+console.log(5 === "5"); // false , TS Ошибка
 ```
 
-However, the choices JavaScript makes are not always ideal. For example, in the below example the first statement is false because `""` and `"0"` are both strings and are clearly not equal. However, in the second case both `0` and the empty string \(`""`\) are falsy \(i.e. behave like `false`\) and are therefore equal with respect to `==`. Both statements are false when you use `===`.
+Однако выбор, который делает JavaScript, не всегда идеален. Например, в примере ниже, первое выражение ложно, потому что `""` и `"0"` оба являются строками и действительно не равны. Однако во втором случае, и `0`, и пустая строка \(`""`\) являются "ложными" \(то есть ведут себя как `false`\) и поэтому равны по отношению к `==`. Оба выражения являются ложными, когда вы используете `===`.
 
 ```javascript
 console.log("" == "0"); // false
@@ -19,22 +19,22 @@ console.log("" === "0"); // false
 console.log(0 === ""); // false
 ```
 
-> Note that `string == number` and `string === number` are both compile time errors in TypeScript, so you don't normally need to worry about this.
+> Заметим, что оба выражения - `string == number` и `string === number` - вызывают ошибку компиляции в TypeScript, так что обычно вам не нужно беспокоиться об этом.
 
-Similar to `==` vs. `===`, there is `!=` vs. `!==`
+Аналогично `==` vs. `===`, есть и `!=` vs. `!==`
 
-So ProTip: Always use `===` and `!==` except for null checks, which we cover later.
+Поэтому ProTip: Всегда используйте `===` и `!==`, кроме случаев проверок на null, которые мы обсудим далее.
 
-## Structural Equality
+## Структурное равенство
 
-If you want to compare two objects for structural equality `==`/`===` are _**not**_ sufficient. e.g.
+Если вы хотите сравнить два объекта на структурное равенство, то операторы `==`/`===` _**не являются**_ подходящими для этого, например:
 
 ```javascript
 console.log({a:123} == {a:123}); // False
 console.log({a:123} === {a:123}); // False
 ```
 
-To do such checks use the [deep-equal](https://www.npmjs.com/package/deep-equal) npm package e.g.
+Для таких проверок используйте npm пакет [deep-equal](https://www.npmjs.com/package/deep-equal), например:
 
 ```javascript
 import * as deepEqual from "deep-equal";
@@ -42,7 +42,7 @@ import * as deepEqual from "deep-equal";
 console.log(deepEqual({a:123},{a:123})); // True
 ```
 
-However, quite commonly you don't need deep checks and all you really need is to check by some `id` e.g.
+Однако, как правило, вам не нужны глубокие проверки, и всё, что вы действительно хотите - это проверить объекты по некоторому `id`, например:
 
 ```typescript
 type IdDisplay = {
