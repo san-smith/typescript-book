@@ -2,49 +2,49 @@
 
 > [Free youtube video on the subject](https://www.youtube.com/watch?v=kaUfBNzuUAI)
 
-JavaScript \(and by extension TypeScript\) has two bottom types : `null` and `undefined`. They are _intended_ to mean different things:
+JavaScript \(и, соответственно, TypeScript\) имеет два базовых типа: `null` и `undefined`. Они предназначены для обозначения разных вещей:
 
-* Something hasn't been initialized : `undefined`.
-* Something is currently unavailable: `null`.
+* Что-то не было проинициализировано: `undefined`.
+* Что-то в данный момент недоступно: `null`.
 
-## Checking for either
+## Проверки
 
-Fact is you will need to deal with both. Just check for either with `==` check.
+Фактически, вы будете иметь дело с каждым из этих типов. Просто проверьте каждый из них с помощью оператора  `==`.
 
 ```typescript
-/// Imagine you are doing `foo.bar == undefined` where bar can be one of:
+/// Представьте, что вы делаете `foo.bar == undefined`, где bar может быть одним из:
 console.log(undefined == undefined); // true
 console.log(null == undefined); // true
 
-// You don't have to worry about falsy values making through this check
+// Вам не нужно беспокоиться о "ложных" (falsy) значениях, которые проходят эту проверку
 console.log(0 == undefined); // false
 console.log('' == undefined); // false
 console.log(false == undefined); // false
 ```
 
-Recommend `== null` to check for both `undefined` or `null`. You generally don't want to make a distinction between the two.
+Рекомендуем использовать `== null` для проверки `undefined` или `null`. Как правило, вы не хотите проводить различие между ними.
 
 ```typescript
 function foo(arg: string | null | undefined) {
   if (arg != null) {
-    // arg must be a string as `!=` rules out both null and undefined. 
+    // arg должен быть строкой, поскольку `!=` исключает как null, так и undefined. 
   }
 }
 ```
 
-One exception, root level undefined values which we discuss next.
+Единственное исключение - неопределенные значения глобального уровня \(root level undefined values\), которые мы обсудим далее.
 
-## Checking for root level undefined
+## Проверка для глобального уровня
 
-Remember how I said you should use `== null`. Of course you do \(cause I just said it ^\). Don't use it for root level things. In strict mode if you use `foo` and `foo` is undefined you get a `ReferenceError` **exception** and the whole call stack unwinds.
+Помните, как я сказал, что вы должны использовать `== null`? Конечно вы помните \(ведь я только что сказал это ^\). Не используйте это для вещей глобального уровня. В строгом режиме, если вы используете `foo` и `foo` не определено, то вы получите **исключение** `ReferenceError` и весь стек вызовов раскрутится.
 
-> You should use strict mode ... and in fact the TS compiler will insert it for you if you use modules ... more on those later in the book so you don't have to be explicit about it :\)
+> Вы должны использовать строгий режим... и, фактически, компилятор TS вставит его для вас, если вы используете модули... подробнее об этом позже в книге, так что вам не нужно явно об этом говорить :\)
 
-So to check if a variable is defined or not at a _global_ level you normally use `typeof`:
+Таким образом, чтобы проверить, определена ли переменная на _глобальном_ уровне, вы обычно используете `typeof` :
 
 ```typescript
 if (typeof someglobal !== 'undefined') {
-  // someglobal is now safe to use
+  // someglobal теперь можно безопасно использовать
   console.log(someglobal);
 }
 ```
